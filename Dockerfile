@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-# This could also be another ubuntu or debian based distributions
+# Distro could also be another ubuntu or debian based
 FROM ubuntu:20.10
 WORKDIR /app
 # Install Open3D system dependencies and pip
@@ -12,6 +12,4 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
 
 # Install Open3D from the pypi repositories
 RUN python3 -m pip install --no-cache-dir --upgrade open3d
-
-# RUN make /app
- #CMD ["python", "app/app.py"]
+ENTRYPOINT ["python","./script.py"]
