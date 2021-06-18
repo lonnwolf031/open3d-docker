@@ -12,4 +12,4 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
 
 # Install Open3D from the pypi repositories
 RUN python3 -m pip install --no-cache-dir --upgrade open3d
-ENTRYPOINT ["python","./script.py"]
+ENTRYPOINT ["python",".src/main.py"]

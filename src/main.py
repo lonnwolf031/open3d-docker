@@ -1,9 +1,16 @@
 import numpy as np
 import open3d as o3d
+import argparse
+
+parser = argparse.ArgumentParser(description='Process a pointcloud file.')
+parser.add_argument('file', help='name of the input file')
+
+args = parser.parse_args()
+print(args.accumulate(args.integers))
 
 #create paths and load data
 input_path="your_path_to_file/"
-output_path="your_path_to_output_folder/"
+output_path="/data"
 dataname="sample_w_normals.xyz"
 point_cloud= np.loadtxt(input_path+dataname,skiprows=1)
 
