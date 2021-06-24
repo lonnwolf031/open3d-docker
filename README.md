@@ -2,6 +2,7 @@ Build a docker container
 =========
 docker build -t open3d-docker .
 
+--> open3d-docker:latest
 
 Run a docker container
 =========
