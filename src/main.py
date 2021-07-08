@@ -2,23 +2,14 @@ import numpy as np
 import open3d as o3d
 import argparse
 
-parser = argparse.ArgumentParser(description='Process a pointcloud file.')
-parser.add_argument('file', help='name of the input file')
 
-args = parser.parse_args()
-print(args.accumulate(args.integers))
 
-#create paths and load data
-input_path="your_path_to_file/"
-output_path="/data"
-dataname="sample_w_normals.xyz"
-point_cloud= np.loadtxt(input_path+dataname,skiprows=1)
-
-#Format to open3d usable objects
-pcd = o3d.geometry.PointCloud()
-pcd.points = o3d.utility.Vector3dVector(point_cloud[:,:3])
-pcd.colors = o3d.utility.Vector3dVector(point_cloud[:,3:6]/255)
-pcd.normals = o3d.utility.Vector3dVector(point_cloud[:,6:9])
+def validate_file(f):
+    if not os.path.exists(f):
+        # Argparse uses the ArgumentTypeError to give a rejection message like:
+        # error: argument input: x does not exist
+        raise argparse.ArgumentTypeError("{0} does not exist".format(f))
+    return f
 
 def BPAstrategy():
     # radius determination
@@ -64,3 +55,17 @@ def ExpAndVisualize():
     # execution of function
     my_lods2 = lod_mesh_export(bpa_mesh, [8000, 800, 300], ".ply", output_path)
 
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='Process a pointcloud file.')
+    parser.add_argument("-i", "--input", dest="filename", required=True, type=validate_file, help="input file", metavar="FILE")
+    args = parser.parse_args()
+    input_path = args.filename
+    output_path = "/data"
+    dataname = "sample_w_normals.xyz"
+    point_cloud = np.loadtxt(input_path + dataname, skiprows=1)
+
+    # Format to open3d usable objects
+    pcd = o3d.geometry.PointCloud()
+    pcd.points = o3d.utility.Vector3dVector(point_cloud[:, :3])
+    pcd.colors = o3d.utility.Vector3dVector(point_cloud[:, 3:6] / 255)
+    pcd.normals = o3d.utility.Vector3dVector(point_cloud[:, 6:9])
