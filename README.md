@@ -1,6 +1,6 @@
 Build a docker container
 =========
-docker build -t open3d-docker .
+`docker build -t open3d-docker .
 
 --> open3d-docker:latest
 
@@ -12,3 +12,10 @@ add --rm if container needs to be removed afterwards
 
 possibility 2
 `docker run  --mount type=bind,source="$(pwd)"/data,target=/home/data -it open3d-docker
+
+
+Make a mountable docker container
+========
+mkdir ~/container-data
+
+`docker run -dit -P --name open3d-docker -v ~/container-data:/data ubuntu
