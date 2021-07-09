@@ -70,6 +70,8 @@ if __name__ == "__main__":
     # new
     pcd = o3d.io.read_point_cloud(input_path)
 
+    msh1 = ExpAndVisualize(BPAstrategy(pcd))
+    msh2 = ExpAndVisualize(PoissonReconstrStrategy(pcd))
     #pcd.points = o3d.utility.Vector3dVector(point_cloud[:, :3])
     #pcd.colors = o3d.utility.Vector3dVector(point_cloud[:, 3:6] / 255)
     #pcd.normals = o3d.utility.Vector3dVector(point_cloud[:, 6:9])
