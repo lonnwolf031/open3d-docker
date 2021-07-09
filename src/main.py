@@ -26,6 +26,7 @@ def BPAstrategy():
     dec_mesh.remove_duplicated_triangles()
     dec_mesh.remove_duplicated_vertices()
     dec_mesh.remove_non_manifold_edges()
+    return dec_mesh
 
 def PoissonReconstrStrategy():
     # computing the mesh
@@ -34,26 +35,26 @@ def PoissonReconstrStrategy():
     # cropping
     bbox = pcd.get_axis_aligned_bounding_box()
     p_mesh_crop = poisson_mesh.crop(bbox)
+    return p_mesh_crop
 
-def ExpAndVisualize():
+def ExpAndVisualize(mesh):
     # export
-    o3d.io.write_triangle_mesh(output_path + "bpa_mesh.ply", dec_mesh)
-    o3d.io.write_triangle_mesh(output_path + "p_mesh_c.ply", p_mesh_crop)
+    o3d.io.write_triangle_mesh(output_path + "mesh.ply", mesh)
 
     # function creation
-    def lod_mesh_export(mesh, lods, extension, path):
+    def lod_mesh_export(lmesh, lods, extension, path):
         mesh_lods = {}
         for i in lods:
-            mesh_lod = mesh.simplify_quadric_decimation(i)
+            mesh_lod = lmesh.simplify_quadric_decimation(i)
             o3d.io.write_triangle_mesh(path + "lod_" + str(i) + extension, mesh_lod)
             mesh_lods[i] = mesh_lod
         print("generation of " + str(i) + " LoD successful")
         return mesh_lods
 
     # execution of function
-    my_lods = lod_mesh_export(bpa_mesh, [100000, 50000, 10000, 1000, 100], ".ply", output_path)
+    my_lods = lod_mesh_export(mesh, [100000, 50000, 10000, 1000, 100], ".ply", output_path)
     # execution of function
-    my_lods2 = lod_mesh_export(bpa_mesh, [8000, 800, 300], ".ply", output_path)
+    my_lods2 = lod_mesh_export(mesh, [8000, 800, 300], ".ply", output_path)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Process a pointcloud file.')
@@ -62,10 +63,13 @@ if __name__ == "__main__":
     input_path = args.filename
     output_path = "/data"
     dataname = "sample_w_normals.xyz"
-    point_cloud = np.loadtxt(input_path + dataname, skiprows=1)
+    #point_cloud = np.loadtxt(input_path + dataname, skiprows=1)
 
     # Format to open3d usable objects
-    pcd = o3d.geometry.PointCloud()
-    pcd.points = o3d.utility.Vector3dVector(point_cloud[:, :3])
-    pcd.colors = o3d.utility.Vector3dVector(point_cloud[:, 3:6] / 255)
-    pcd.normals = o3d.utility.Vector3dVector(point_cloud[:, 6:9])
+    #pcd = o3d.geometry.PointCloud()
+    # new
+    pcd = o3d.io.read_point_cloud(input_path)
+
+    #pcd.points = o3d.utility.Vector3dVector(point_cloud[:, :3])
+    #pcd.colors = o3d.utility.Vector3dVector(point_cloud[:, 3:6] / 255)
+    #pcd.normals = o3d.utility.Vector3dVector(point_cloud[:, 6:9])
