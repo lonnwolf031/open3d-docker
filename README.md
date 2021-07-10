@@ -8,7 +8,6 @@ Run a docker container
 =========
 add --rm if container needs to be removed afterwards
 
-`docker run -v /host/dirwith3dfile:/data open3d-docker -optionsargs
 
 possibility 2
 `docker run  --mount type=bind,source="$(pwd)"/data,target=/home/data -it open3d-docker
@@ -20,3 +19,7 @@ mkdir ~/container-data
 
 `docker run -dit -P --name open3d-docker -v ~/container-data:/data ubuntu
 ` sudo docker run -it hello-demo test.py`
+
+
+mount ./data to /usr/src/app
+` docker run -it open3d-docker -v ./data:/usr/src/app main.py scan3d.ply
