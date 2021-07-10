@@ -19,3 +19,4 @@ Make a mountable docker container
 mkdir ~/container-data
 
 `docker run -dit -P --name open3d-docker -v ~/container-data:/data ubuntu
+` sudo docker run -it hello-demo test.py`

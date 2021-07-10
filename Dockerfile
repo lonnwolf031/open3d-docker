@@ -1,7 +1,8 @@
 # syntax=docker/dockerfile:1
 # Distro could also be another ubuntu or debian based
 FROM ubuntu:20.10
-WORKDIR /app
+WORKDIR /usr/src/app
+COPY /src /usr/src/app
 # Install Open3D system dependencies and pip
 RUN apt-get update && apt-get install --no-install-recommends -y \
     libgl1 \
@@ -12,4 +13,6 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
 
 # Install Open3D from the pypi repositories
 RUN python3 -m pip install --no-cache-dir --upgrade open3d
-ENTRYPOINT ["python",".src/main.py"]
+CMD ["main.py"]
+ENTRYPOINT ["python3"]
+

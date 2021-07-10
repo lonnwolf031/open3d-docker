@@ -57,6 +57,7 @@ def ExpAndVisualize(mesh):
     my_lods2 = lod_mesh_export(mesh, [8000, 800, 300], ".ply", output_path)
 
 if __name__ == "__main__":
+    print("script started")
     parser = argparse.ArgumentParser(description='Process a pointcloud file.')
     parser.add_argument("-i", "--input", dest="filename", required=True, type=validate_file, help="input file", metavar="FILE")
     args = parser.parse_args()
