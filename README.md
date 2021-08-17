@@ -24,4 +24,5 @@ mkdir ~/container-data
 mount ./data to /usr/src/app
 ` docker run --rm -it open3d-docker -v ~/container-data:/usr/src/app main.py -i scan3d.ply
 ` docker run --rm -it open3d-docker --mount type=bind,source=~/container-data,target=/usr/src/app  main.py -i scan3d.ply
-` docker run --rm -it open3d-docker -v "$(pwd):/mydir" main.py -i /mydir/scan3d.ply
+` 
+docker run --rm -it  -v $(pwd):/usr/src/app -it open3d-docker main.py -i scan3d.ply
