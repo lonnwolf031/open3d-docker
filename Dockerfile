@@ -13,6 +13,10 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
 
 # Install Open3D from the pypi repositories
 RUN python3 -m pip install --no-cache-dir --upgrade open3d
-CMD ["/bin/sh"]
+#CMD ["/bin/sh"]
+#CMD "python main.py"
 #ENTRYPOINT ["python3"]
+CMD ["python", "src/main.py"]
+# Replacing CMD with ENTRYPOINT
+#ENTRYPOINT ["/usr/local/bin/youtube-dl"]
 
